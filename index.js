@@ -1,16 +1,17 @@
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
+require("dotenv").config();
 
 const app = express();
 const port = 3000;
 
 const db = new pg.Client({
-  user: "postgres",
+  user: process.env.DB_USER,
   host: "localhost",
-  database: "world",
-  password: "Ami@9978225367",
-  port: 5432,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 db.connect();
 
@@ -99,7 +100,6 @@ app.post("/new", async (req, res) => {
 
   const id = result.rows[0].id;
   currentUserId = id;
-
   res.redirect("/");
 });
 
